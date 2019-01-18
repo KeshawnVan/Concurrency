@@ -7,14 +7,14 @@ package basis;
  */
 public class WaitAndInterrupted {
 
-    private static Object object = new Object();
+    private static final Object OBJECT = new Object();
 
     public static void main(String[] args) {
         Thread waitThread = new Thread(() -> {
             System.out.println("waitThread start");
-            synchronized (object) {
+            synchronized (OBJECT) {
                 try {
-                    object.wait();
+                    OBJECT.wait();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
