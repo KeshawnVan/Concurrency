@@ -11,27 +11,23 @@ public class ProducerAndConsumer {
 
         new Thread(() -> {
             synchronized (queue) {
-                while (true) {
-                    while (queue.size() >= 100) {
-                        wait(queue);
-                    }
-                    String value = String.valueOf(new Random().nextInt(100));
-                    System.out.println("put " + value);
-                    queue.add(value);
-                    queue.notifyAll();
+                while (queue.size() >= 100) {
+                    wait(queue);
                 }
+                String value = String.valueOf(new Random().nextInt(100));
+                System.out.println("put " + value);
+                queue.add(value);
+                queue.notifyAll();
             }
         }).start();
 
         new Thread(() -> {
             synchronized (queue) {
-                while (true) {
-                    while (queue.isEmpty()) {
-                        wait(queue);
-                    }
-                    System.out.println("get " + queue.poll());
-                    queue.notifyAll();
+                while (queue.isEmpty()) {
+                    wait(queue);
                 }
+                System.out.println("get " + queue.poll());
+                queue.notifyAll();
             }
         }).start();
     }
